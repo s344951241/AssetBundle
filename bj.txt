@@ -1,0 +1,36 @@
+ab文件分为serialized(序列化文件)和resource files(源文件)
+
+通过命名xx/xx分类文件夹
+名字  后缀
+
+unity相对路径在Assets的目录
+
+打包代码:
+BuildPipeline.BuildAssetBundles("AssetBundles",BuildAssetBundleOptions.None,BuildTarget.StandaloneWindows64);
+
+BuildAssetBundleOptions.None    lZMA算法 包小 加载时间长(整体解压) 下载下来就会用lz4算法保存到本地
+BuildAssetBundleOptions.UncompressedAssetBundle   不压缩
+
+BuildAssetBundleOptions.ChunkBasedCompression lz4压缩（不用整体压缩）加载快
+
+加载文件必须是完整的后缀
+
+
+依赖打包(给依赖的资源命名assetbundle)
+	依赖加载(加载manifest里的Dependencies)
+	【依赖前后加载没关系，只要使用资源前都加载出来就行】
+
+assetbundle的使用
+	
+	 AssetBundle.LoadFromFile    文件路径加载
+	 AssetBundle.LoadFromMemory   内存加载
+	 WWW.LoadFromCacheOrDownload     2017不推荐
+	 UnityWebRequest    2017以后推荐(网络加载)
+
+loadAsset加载资源也有异步
+
+Manifest加载依赖资源
+
+AssetBundle.unload(true)场景切换的时候卸载资源一般
+
+AssetBundles-Browser工具
